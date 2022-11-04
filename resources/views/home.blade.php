@@ -4,7 +4,7 @@
 {{-- HEADER --}}
 @section('header')
 
-    <p>HEADER GOES HERE</p>
+    <x-header :pageTitle="$pageTitle" />
 
 @endsection
 
@@ -26,4 +26,3 @@
     <p>FOOTER GOES HERE</p>
 
 @endsection
-

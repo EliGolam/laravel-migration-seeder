@@ -13,6 +13,8 @@ class HomeController extends Controller
         $trains = Train::all();
         $trainsToday = Train::whereDate("departure_times", $now)->get();
 
-        return view('home', compact('trains', 'trainsToday'));
+        $pageTitle = 'Home Page';
+
+        return view('home', compact('trains', 'trainsToday', 'pageTitle'));
     }
 }

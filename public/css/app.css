@@ -84,9 +84,7 @@ select {
 
 /* BREAKPOINTS */
 
-*,
-*::after,
-*::before {
+body {
   font: 400 0.9rem "Oswald", Helvetica, Arial, sans-serif;
 }
 

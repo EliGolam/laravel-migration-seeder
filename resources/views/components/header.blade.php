@@ -1,0 +1,3 @@
+{{-- HEADER--}}
+
+<h1>{{ $pageTitle }}</h1>
