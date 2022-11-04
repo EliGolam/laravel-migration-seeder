@@ -1,0 +1,9 @@
+// FONT
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;600;700&display=swap');
+
+
+*,
+*::after,
+*::before {
+    font: $fw-regular $fs-5 $primary-font;
+}
