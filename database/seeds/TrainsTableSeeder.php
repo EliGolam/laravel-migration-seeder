@@ -65,19 +65,21 @@ class TrainsTableSeeder extends Seeder
     }
 
     private function getTimes(Faker $faker) : array {
-        $date = $faker->date();
-        $time = $faker->time();
 
-        $dep_time = DateTime::createFromFormat('Y-m-d H:i:s', $date . $time);
+        $date = $faker->dateTimeBetween('now', '+1 month', 'Europe/Amsterdam');
+        $time = $faker->time();
+        $strDateTime = $date->format('Y-m-d') . $time;
+
+        $dep_time = DateTime::createFromFormat('Y-m-d H:i:s', $strDateTime);
 
 
         do {
-            $time = $faker->time();
-            $arr_time = DateTime::createFromFormat('Y-m-d H:i:s', strval($date) . $time);
-
             if ($time > '23:00:00') {
-                date_add($arr_time, date_interval_create_from_date_string("1 day"));
+                date_add($date, date_interval_create_from_date_string("1 day"));
             }
+
+            $strDateTime = $date->format('Y-m-d') . $faker->time();
+            $arr_time = DateTime::createFromFormat('Y-m-d H:i:s', $strDateTime);
 
         } while ($arr_time < $dep_time);
 
