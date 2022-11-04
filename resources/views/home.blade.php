@@ -13,7 +13,7 @@
 @section('main')
 
     <p>MAIN CONTENT GOES HERE</p>
-    @foreach ($trains as $train)
+    @foreach ($trainsToday as $train)
         @dump($train)
     @endforeach
 
