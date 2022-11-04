@@ -13,6 +13,9 @@
 @section('main')
 
     <p>MAIN CONTENT GOES HERE</p>
+    @foreach ($trains as $train)
+        @dump($train)
+    @endforeach
 
 @endsection
 
