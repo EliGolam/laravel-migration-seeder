@@ -27,7 +27,8 @@ class TrainsTableSeeder extends Seeder
         for($i = 0; $i < 100; $i++) {
             $train = new Train();
 
-            $train->companies = $this->getCompany();
+            $company = $this->getCompany();
+            $train->companies = $company;
 
             $stations = $this->getStations($faker);
             $train->departure_stations = $stations[0];
@@ -37,18 +38,20 @@ class TrainsTableSeeder extends Seeder
             $train->departure_times = $times[0];
             $train->arrival_times = $times[1];
 
-            $train->train_codes = $this->getCode($faker, $train->companies);
+            $train->train_codes = $this->getCode($faker, $company);
 
             $train->num_compartments = $faker->numberBetween(1, 20);
             $train->is_in_time = $faker->boolean();
             $train->cancelled = $faker->boolean();
+
+            $train->save();
         }
     }
 
 
 
     private function getCompany() : string {
-        $index = rand(0, count($this->companyList));
+        $index = rand(0, count($this->companyList) - 1);
         return $this->companyList[$index];
     }
 
@@ -62,17 +65,20 @@ class TrainsTableSeeder extends Seeder
     }
 
     private function getTimes(Faker $faker) : array {
-        $date = DateTime::createFromFormat('Y-m-d', $faker->date());
+        $date = $faker->date();
         $time = $faker->time();
+
         $dep_time = DateTime::createFromFormat('Y-m-d H:i:s', $date . $time);
 
-        if ($time > '23:00:00') {
-            date_add($date, date_interval_create_from_date_string("1 day"));
-        }
 
         do {
             $time = $faker->time();
-            $arr_time = DateTime::createFromFormat('Y-m-d H:i:s', $date . $time);
+            $arr_time = DateTime::createFromFormat('Y-m-d H:i:s', strval($date) . $time);
+
+            if ($time > '23:00:00') {
+                date_add($arr_time, date_interval_create_from_date_string("1 day"));
+            }
+
         } while ($arr_time < $dep_time);
 
         return [$dep_time, $arr_time];
